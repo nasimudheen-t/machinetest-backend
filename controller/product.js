@@ -56,3 +56,23 @@ exports.deleteproducts = async(req,res)=>{
         res.status(401).json(err)
     }
 }
+
+
+// filtering
+
+exports.productsFiltering =  async(req,res)=>{
+    try{
+            const {category} = req.query
+            const filter = {}
+            if(category)filter.category = category
+        console.log("Filter:", filter);
+
+            const sort = {category:1,price:1} ;
+           const sortingProduct = await products.find(filter).sort(sort)
+           console.log("Sort result:", sortingProduct);
+
+           res.status(200).json({message:'products sorted',sortingProduct})
+    }catch(err){
+        res.status(401).json(err)
+    }
+}
